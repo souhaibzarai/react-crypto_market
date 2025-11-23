@@ -1,6 +1,7 @@
 import { useEffect, useEffectEvent, useState } from "react";
 import CryptoCard from "../components/CryptoCard";
 import { fetchCryptos } from "../api/coinGecko";
+import { Link } from "react-router";
 
 export const Home = () => {
   const [cryptoList, setCryptoList] = useState([]);
@@ -40,23 +41,11 @@ export const Home = () => {
   });
 
   return (
-    <>
-      <div className="display-crypto">
-        <button
-          className={`${viewMode === "grid" ? "active" : ""}`}
-          onClick={() => setViewMode("grid")}
-        >
-          Grid
-        </button>
-        <button
-          className={`${viewMode === "list" ? "active" : ""}`}
-          onClick={() => setViewMode("list")}
-        >
-          List
-        </button>
-      </div>
+    <div className="app">
       <div className="header">
-        <div className="logo">Cryp-Mark</div>
+        <div className="logo">
+          <Link to={"/"}>Cryp-Mark</Link>
+        </div>
         <input
           type="text"
           className="search-input"
@@ -64,6 +53,23 @@ export const Home = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
+      </div>
+      <div className="controls">
+        <div className="filter-group"></div>
+        <div className="view-toggle">
+          <button
+            className={`${viewMode === "grid" ? "active" : ""}`}
+            onClick={() => setViewMode("grid")}
+          >
+            Grid
+          </button>
+          <button
+            className={`${viewMode === "list" ? "active" : ""}`}
+            onClick={() => setViewMode("list")}
+          >
+            List
+          </button>
+        </div>
       </div>
       <div className="home-content">
         {isLoading ? (
@@ -85,6 +91,6 @@ export const Home = () => {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
