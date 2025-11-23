@@ -6,12 +6,10 @@ import { CoinDetails } from "./pages/CoinDetails";
 const App = () => {
   return (
     <BrowserRouter>
-      <div className="app">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/coin/:id" element={<CoinDetails />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/coin/:id" element={<CoinDetails />} />
+      </Routes>
     </BrowserRouter>
   );
 };
