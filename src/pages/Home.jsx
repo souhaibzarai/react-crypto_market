@@ -13,10 +13,9 @@ export const Home = () => {
   const fetchCryptoList = async () => {
     try {
       const data = await fetchCryptos();
-      console.log(data);
       setCryptoList(data);
     } catch (error) {
-      throw new Error("Failed to fetch data: ", error);
+      console.error("Error fetching crypto: ", error);
     } finally {
       setIsLoading(false);
     }
