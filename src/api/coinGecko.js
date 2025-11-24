@@ -4,7 +4,7 @@ export const fetchCryptos = async () => {
   const response = await fetch(`${BASE_URL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20`)
 
   if (!response.ok) {
-    throw new Error('Failed to fetch cryptos');
+    throw new Error('Failed to fetch cryptos data');
   }
 
   return response.json();
@@ -17,4 +17,14 @@ export const fetchCoinDataById = async (id) => {
     throw new Error('Failed to fetch coin data');
   }
   return response.json();
+}
+
+export const fetchChartData = async (id) => {
+  const response = await fetch(`${BASE_URL}/coins/${id}/market_chart?vs_currency=usd&days=7`);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch chart data');
+  }
+
+  return await response.json();
 }
