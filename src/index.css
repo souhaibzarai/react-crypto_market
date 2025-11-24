@@ -40,11 +40,11 @@ body {
   width: 100%;
   display: grid;
   align-items: center;
-  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
   justify-content: space-between;
   gap: 16px;
   margin: auto;
-  max-width: 1200px;
+  max-width: 900px;
 }
 
 .header-content .logo-section h1 {
@@ -175,6 +175,8 @@ p {
   align-items: center;
   justify-content: space-around;
   position: relative;
+  max-width: 1200px;
+  margin:auto;
 }
 
 .view-toggle {
@@ -297,6 +299,8 @@ button.back-button {
   transition: .5s ease;
   box-shadow: none;
   font-size: 1rem;
+  max-width: 300px;
+  margin: auto;
 }
 
 button.back-button:hover {
