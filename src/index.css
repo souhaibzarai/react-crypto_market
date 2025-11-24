@@ -176,7 +176,7 @@ p {
   justify-content: space-around;
   position: relative;
   max-width: 1200px;
-  margin:auto;
+  margin: auto;
 }
 
 .view-toggle {
@@ -203,14 +203,14 @@ p {
   border-color: white;
 }
 
-
 select {
-  padding: 12px 20px;
+  padding: 10px 20px;
   background-color: transparent;
   color: white;
   border: 1px solid #6f7376;
   outline: #010203;
   font-size: 1rem;
+  border-radius: 10px;
 }
 
 option {
@@ -352,11 +352,12 @@ button.back-button:hover {
   color: #fff;
 }
 
-.coin-price-section {
+.coin-price-section,
+.chart-section {
   margin: 20px auto;
   padding: 16px;
   border: 1.5px solid #282a2c;
-  border-radius: 16px;
+  border-radius: 12px;
   background: #010203;
 }
 
@@ -386,4 +387,29 @@ button.back-button:hover {
 .price-range {
   display: flex;
   flex-direction: column;
+}
+
+.chart-section h3 {
+  color: white;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  width: 100%;
+  padding: 16px;
+  border: 1.5px solid #282a2c;
+  border-radius: 12px;
+  background: #010203;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  color: white;
+  font-size: 1.2rem;
 }
