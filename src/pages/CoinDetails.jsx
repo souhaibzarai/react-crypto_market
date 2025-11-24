@@ -1,28 +1,63 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { fetchCoinDataById } from "../api/coinGecko";
-import { formatPrice } from "../utils/formatter";
+import { fetchChartData, fetchCoinDataById } from "../api/coinGecko";
+import { formatMarketCap, formatPrice } from "../utils/formatter";
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 export const CoinDetails = () => {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [coin, setCoin] = useState(null);
+  const [chartData, setChartData] = useState([]);
   const navigate = useNavigate();
 
   const loadCoinData = async (coinId) => {
     try {
       const data = await fetchCoinDataById(coinId);
-      console.log(data);
       setCoin(data);
     } catch (error) {
-      throw new Error("Failed to fetch data: ", error);
+      console.error("Error fetching coin data: ", error);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const loadChartData = async (coinId) => {
+    try {
+      const data = await fetchChartData(coinId);
+      const formattedData = data.prices.map((price) => {
+        const date = new Date(price[0]);
+        return {
+          time: date.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+          }),
+          price: price[1].toFixed(2),
+        };
+      });
+      setChartData(formattedData);
+    } catch (error) {
+      console.error("Error fetching chart data: ", error);
+    }
+  };
+
   useEffect(() => {
-    loadCoinData(id);
+    let ignore = false;
+
+    if (!ignore) {
+      loadCoinData(id);
+      loadChartData(id);
+    }
+
+    return () => (ignore = true);
   }, [id]);
 
   if (isLoading) {
@@ -82,6 +117,7 @@ export const CoinDetails = () => {
           </div>
           <span className="rank">Rank #{coin.market_data.market_cap_rank}</span>
         </div>
+
         <div className="coin-price-section">
           <div className="current-price">
             <h2 className="price">
@@ -106,6 +142,70 @@ export const CoinDetails = () => {
                 {formatPrice(coin.market_data.low_24h.usd)}
               </span>
             </div>
+          </div>
+        </div>
+
+        <div className="chart-section">
+          <h3>Price Chart (7Days)</h3>
+          <ResponsiveContainer width="100%" height={400}>
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="255, 255, 255, .1" />
+              <XAxis
+                dataKey="time"
+                stroke="#8392a1ff"
+                style={{ fontSize: "12px" }}
+              />
+              <YAxis
+                stroke="#8392a1ff"
+                style={{ fontSize: "12px" }}
+                domain={["auto", "auto"]}
+              />
+
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "rgba(20,20,40,.95)",
+                  border: "1px solid rgba(255, 255,255,.1)",
+                  borderRadius: "8px",
+                  color: "#e0e0e0",
+                }}
+              />
+              <Line
+                dataKey="price"
+                type="monotone"
+                stroke="#add8ec"
+                strokeWidth={2}
+                dot={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="stats-grid">
+          <div className="stat-card">
+            <span className="stat-label">Market cap</span>
+            <span className="stat-value">
+              ${formatMarketCap(coin.market_data.market_cap.usd)}
+            </span>
+          </div>
+          <div className="stat-card">
+            <span className="stat-label">Volume (24h)</span>
+            <span className="stat-value">
+              ${formatMarketCap(coin.market_data.total_volume.usd)}
+            </span>
+          </div>
+
+          <div className="stat-card">
+            <span className="stat-label">Circulating Supply</span>
+            <span className="stat-value">
+              {coin.market_data.circulating_supply?.toLocaleString() || "N/A"}
+            </span>
+          </div>
+
+          <div className="stat-card">
+            <span className="stat-label">Total Supply</span>
+            <span className="stat-value">
+              {coin.market_data.total_supply?.toLocaleString() || "N/A"}
+            </span>
           </div>
         </div>
       </div>
