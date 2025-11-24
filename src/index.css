@@ -26,43 +26,46 @@ body {
 }
 
 .header {
-  width: 100%;
-  display: flex;
-  height: 110px;
-  justify-content: space-between;
-  position: fixed;
+  position: static;
   backdrop-filter: blur(5px);
-  padding: 0 20px;
   align-items: center;
   border-bottom: 1px solid rgb(36, 36, 36);
-  z-index: 100;
+  z-index: 10;
+  width: 100%;
+  padding: 12px;
 }
 
-.logo {
-  cursor: pointer;
+.header-content {
+  padding: 0 2rem;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  justify-content: space-between;
+  gap: 16px;
 }
 
-.logo a {
-  color: aliceblue;
-  font-size: 32px;
-  font-weight: 500;
-  text-decoration: none;
+.header-content .logo-section h1 {
+  color: rgb(33, 143, 168);
+}
+
+.header-content .logo-section p {
+  font-size: 16px;
 }
 
 .search-input {
   background: transparent;
   outline: none;
-  border: 1px solid rgba(101, 159, 221, 0.668);
-  padding: 12px 12px;
+  border: 2px solid rgba(101, 159, 221, 0.668);
+  padding: 12px 20px;
   font-size: 22px;
   color: white;
-  border-radius: 16px;
+  border-radius: 32px;
+  width: 100%;
 }
 
-.home-content {
-  top: 110px;
-  position: relative;
-  background-color: #010203;
+.coin-detail {
+  padding: 2rem;
 }
 
 p {
@@ -111,9 +114,9 @@ p {
 }
 
 .crypto-container.list {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
   gap: 1rem;
+  flex-direction: column;
 }
 
 .crypto-card {
@@ -129,6 +132,13 @@ p {
   gap: 16px;
   display: flex;
   flex-direction: column;
+  top: 0;
+  transition: .5s ease;
+}
+
+.crypto-card:hover {
+  border-color: #3a60a66e;
+  top: -5px;
 }
 
 .crypto-card h3 {
@@ -156,10 +166,8 @@ p {
   height: 70px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  top: 110px;
+  justify-content: space-around;
   position: relative;
-  padding: 0 16px;
 }
 
 .view-toggle {
@@ -186,9 +194,25 @@ p {
   border-color: white;
 }
 
+
+select {
+  padding: 12px 20px;
+  background-color: transparent;
+  color: white;
+  border: 1px solid #6f7376;
+  outline: #010203;
+  font-size: 1rem;
+}
+
+option {
+  background: #010203;
+  color: rgba(64, 207, 193, 0.766);
+}
+
 .symbol {
-  font-size: 15px;
+  font-size: 1rem;
   margin-bottom: 8px;
+  text-transform: uppercase;
 }
 
 span.rank {
@@ -196,8 +220,8 @@ span.rank {
   width: fit-content;
   padding: 4px 12px;
   border-radius: 30px;
-  font-size: 15px;
-  font-weight: bold;
+  font-size: .8rem;
+  font-weight: 500;
   color: black;
 }
 
@@ -239,13 +263,116 @@ span.rank {
   flex-direction: column;
 }
 
-.stat .stat-label {
+.stat-label,
+.range-label {
   font-size: 13px;
-  text-transform: uppercase;
   color: #ffffffac;
 }
 
-.stat .stat-value {
-  font-size: 16px;
+.stat-label {
+  text-transform: uppercase;
+}
+
+.stat-value,
+.range-value {
+  font-size: 1.2rem;
   font-weight: 500;
+}
+
+button.back-button {
+  padding: 12px 20px;
+  background: transparent;
+  color: white;
+  border: 1.5px solid #282a2c;
+  outline: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: .5s ease;
+  box-shadow: none;
+  font-size: 1rem;
+}
+
+button.back-button:hover {
+  border-color: rgba(0, 255, 0, 0.29);
+  box-shadow: inset 0px 0px 2px 0.1px #fbfbfb45;
+  scale: 1.05;
+}
+
+.no-result {
+  width: 100%;
+  height: 100vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-result h2 {
+  color: #f04f4fce;
+  font-size: 2rem;
+
+}
+
+.no-result span {
+  font-size: 1.8rem;
+  color: #d31a1aab;
+  text-transform: uppercase;
+}
+
+.no-result:first-of-type button {
+  margin-top: 20px;
+}
+
+/* .coin-header {} */
+
+.coin-title {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.coin-title img {
+  width: 50px;
+}
+
+.coin-title h1 {
+  font-size: 2rem;
+  color: #fff;
+}
+
+.coin-price-section {
+  margin: 20px auto;
+  padding: 16px;
+  border: 1.5px solid #282a2c;
+  border-radius: 16px;
+  background: #010203;
+}
+
+.current-price {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.current-price h2 {
+  color: white;
+  font-size: 2rem;
+}
+
+.current-price .change {
+  padding: 8px 15px;
+  font-size: 1rem;
+}
+
+.price-ranges {
+  color: white;
+  display: flex;
+  gap: 1.5rem;
+  margin: 16px 0 0;
+}
+
+.price-range {
+  display: flex;
+  flex-direction: column;
 }
